@@ -1,6 +1,8 @@
 package com.ben.leetcode.array;
 
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by ben on 21-10-2018.
@@ -24,11 +26,15 @@ public class L1TwoSum {
         int target2 = 6;
         int target = 9;
         //System.out.println(Arrays.toString(twoSum(nums, target))); // [0,1]
-        System.out.println(Arrays.toString(twoSum(nums2, target2))); // [1,2]
+        //System.out.println(Arrays.toString(twoSum(nums2, target2))); // [1,2]
+        System.out.println(Arrays.toString(twoSumUnsortedArray(nums2, target2))); // [1,2]
     }
 
     /**
      * Using two pointer Approach.
+     *
+     * This solution is valid only array is sorted in ascending order.
+     *
      * Time Complexity O(n)
      * Space Complexity O(1)
      * @param nums
@@ -48,5 +54,33 @@ public class L1TwoSum {
             }
         }
         return new int[]{0,0};
+    }
+
+    /**
+     * This approach do not require sorted array.
+     *
+     * This is One pass approach. But we could two pass approach as well.
+     *
+     * We would use a map to store the compliment each number after checking if number itself is there. along with number's index.
+     * We will use HashMap because, It gives O(1) time performance for find operation.
+     *
+     * We need to make sure that a number's compliment is not the number itself. Any condition not required as we visit sigle index only once and me only single operation from the given 2.
+     *
+     * Time Complexity O(n)
+     * Space Complexity O(n)
+     * @param nums
+     * @param target
+     * @return
+     */
+    public static int[] twoSumUnsortedArray(int[] nums, int target) {
+        Map<Integer, Integer> compliments = new HashMap<Integer, Integer>();
+        for ( int i=0; i < nums.length; i++) {
+            if (compliments.containsKey(nums[i])) {
+                return new int[] {compliments.get(nums[i]), i};
+            }else {
+                compliments.put(target-nums[i],i);
+            }
+        }
+        return new int[] {-1,-1};
     }
 }
