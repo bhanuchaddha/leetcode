@@ -18,7 +18,7 @@ package com.ben.leetcode.array;
 
 // In this case, no transaction is done, i.e. max profit = 0.
 
-public class BestTimeToBuySellTheStock {
+public class L121BestTimeToBuySellTheStock {
 
 
     public static void main(String[] args) {
