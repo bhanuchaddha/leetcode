@@ -24,35 +24,67 @@ public class BestTimeToBuySellTheStock {
     public static void main(String[] args) {
         int[] input = new int[]  {7, 1, 5, 3, 6, 4};
         int[] input2 = new int[]  {7, 6, 4, 3, 1};
-        System.out.println(maxProfitBrutForce(input));//5
-        System.out.println(maxProfitBrutForce(input2));//0
-        System.out.println(maxProfit(input));//5
-        System.out.println(maxProfit(input2));//0
+        int[] input3 = new int[]  {2,4,1,7};
+        int[] input4 = new int[]  {4,7,1,2,11,12};
+        //System.out.println(maxProfitBrutForce(input));//5
+        //System.out.println(maxProfitBrutForce(input2));//0
+//        System.out.println(maxProfit(input));//5
+//        System.out.println(maxProfit(input2));//0
+//        System.out.println(maxProfit(input3));//6
+//        System.out.println(maxProfit(input4));//11
+        System.out.println(maxProfit2(input));//5
+        System.out.println(maxProfit2(input2));//0
+        System.out.println(maxProfit2(input3));//6
+        System.out.println(maxProfit2(input4));//11
     }
 
     /*
-    * Case 1 : pair not found -  new minima
-    * Case 2 : pair not fount - new maxima
-    * Case 3 : pair found - you can only search for max, not min - new mxima
-    * Case 4 : pair found - new minima
+    * Attempt 2
+    * Using One Pass Algorithm
+    * Time Complexity O(n)
+    * Space Complexity O(1)
     *
+    * Taking only minprice and maximumProfit into consideration.
     * */
-    static int maxProfit(int[] input ){//{7, 1, 5, 3, 6, 4}
+    static int maxProfit2(int[] input){
+        int maxProfit = 0;
+        int minPrice = Integer.MAX_VALUE;
+        for (int i= 0; i < input.length; i++) {
+            if (input[i] < minPrice){
+                minPrice = input[i];
+            } else if (input[i]-minPrice > maxProfit) {
+                maxProfit = input[i]-minPrice;
+            }
+        }
+        return maxProfit;
+    }
+
+
+
+    /*
+    * Attempt 1.
+    * Using different cases.
+    * Time Complexity O(n)
+    * Space Complexity O(1)
+    * */
+    static int maxProfit(int[] input ){
         int minI = 0;//0
         int maxI = 0;//2
         boolean pairFound = false;
         int newMinI = 0;
         for (int i = 1; i < input.length ; i++) {
-            if( !pairFound && input[i] < input[minI] ) { // Case 1
+            if( !pairFound && input[i] < input[minI] ) { // if pair is not set. keep looking for min
                 minI = i;
-            } else if (!pairFound && input[i]> input[minI]){ // first maxima nee to be set
+            } else if (!pairFound && input[i]> input[minI]){ // first maxima need to be set. set as soon as first bigger number is found
                 maxI = i;
                 pairFound =true;
-            } else if ( pairFound && input[i] > input[maxI] ) { // Case 2 && Case 4
+            } else if ( pairFound && input[i] > input[maxI] && (newMinI < minI)) { // keep on looking for max . but not in case new min has been found
                 maxI = i;
-            } else if ( pairFound && input[i] < input[minI] ){
+            } else if ( pairFound && input[i] < input[minI] && newMinI <= minI){ // if you find new min after pair is set. start new pair
                 newMinI = i;
-            } else if ( pairFound && (input[i]-input[newMinI]) > (input[maxI]-input[minI]) ) { //new pair found
+            } else if (pairFound && newMinI > minI && input[i] < input[newMinI]){ // when new min found while looking for new pair
+                newMinI = i;
+            } else if ( pairFound && (input[i]-input[newMinI]) > (input[maxI]-input[minI]) ) { // Conclude the pair, if new max is found
                 minI = newMinI;
                 maxI = i;
             }
@@ -66,8 +98,10 @@ public class BestTimeToBuySellTheStock {
     }
 
     /*
+    * BrutForce
     * Two for loops .
-    * N^2
+    * Time Complexity O(n^2)
+    * Space Complexity O(1)
     * */
     static  int maxProfitBrutForce(int[] input) {
         int maxProfit=0;
