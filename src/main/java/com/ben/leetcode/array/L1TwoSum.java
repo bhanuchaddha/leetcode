@@ -64,7 +64,7 @@ public class L1TwoSum {
      * We would use a map to store the compliment each number after checking if number itself is there. along with number's index.
      * We will use HashMap because, It gives O(1) time performance for find operation.
      *
-     * We need to make sure that a number's compliment is not the number itself. Any condition not required as we visit sigle index only once and me only single operation from the given 2.
+     * We need to make sure that a number's compliment is not the number itself. Any condition not required as we visit single index only once and me only single operation from the given 2.
      *
      * Time Complexity O(n)
      * Space Complexity O(n)

@@ -45,6 +45,8 @@ public class L121BestTimeToBuySellTheStock {
     * Space Complexity O(1)
     *
     * Taking only minprice and maximumProfit into consideration.
+    * Start from beginning and look for minmum value
+    * If current value is greater than min value check for max profit
     * */
     static int maxProfit2(int[] input){
         int maxProfit = 0;
